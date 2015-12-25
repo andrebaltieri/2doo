@@ -2,13 +2,14 @@
 
 module doo {
     export class SideBarController {
-        static $inject = ['$mdSidenav', '$mdDialog', 'todoService'];
+        static $inject = ['$scope', '$mdSidenav', '$mdDialog', 'todoService'];
 
         private service: ITodoService;
         private todoLists: TodoList[];
         private listName: string;
 
         constructor(
+            private $scope: ng.IScope,
             private $mdSidenav: ng.material.ISidenavService,
             private $mdDialog: ng.material.IDialogService,
             service: ITodoService) {
@@ -45,7 +46,7 @@ module doo {
             
             this.todoLists.push(new TodoList(id, title));
             localStorage.setItem('2doo.lists', angular.toJson(this.todoLists));
-
+            
             this.$mdDialog.cancel();
         }
     }

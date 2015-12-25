@@ -37,7 +37,8 @@ var doo;
 var doo;
 (function (doo) {
     var SideBarController = (function () {
-        function SideBarController($mdSidenav, $mdDialog, service) {
+        function SideBarController($scope, $mdSidenav, $mdDialog, service) {
+            this.$scope = $scope;
             this.$mdSidenav = $mdSidenav;
             this.$mdDialog = $mdDialog;
             this.service = service;
@@ -67,9 +68,10 @@ var doo;
             var title = this.listName;
             this.todoLists.push(new doo.TodoList(id, title));
             localStorage.setItem('2doo.lists', angular.toJson(this.todoLists));
+            this.$scope.$apply();
             this.$mdDialog.cancel();
         };
-        SideBarController.$inject = ['$mdSidenav', '$mdDialog', 'todoService'];
+        SideBarController.$inject = ['$scope', '$mdSidenav', '$mdDialog', 'todoService'];
         return SideBarController;
     })();
     doo.SideBarController = SideBarController;

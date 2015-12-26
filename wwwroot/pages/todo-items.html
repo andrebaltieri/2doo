@@ -1,3 +1,22 @@
+<md-subheader class="md-warn">Tarefas a Realizar (2)</md-subheader>
+<md-list ng-cloak>
+    <md-subheader class="md-no-sticky">{{ TodoLists[0].title }}</md-subheader>
+    <md-list-item ng-repeat="item in TodoLists[0].todos">
+        <p ng-class="{ 'done': item.done }">{{ item.title }}</p>
+        <md-checkbox class="md-secondary" ng-model="item.done"></md-checkbox>
+    </md-list-item>
+</md-list>
+
+<md-subheader class="md-primary">Tarefas Realizadas (1)</md-subheader>
+<md-list ng-cloak>
+    <md-subheader class="md-no-sticky">{{ TodoLists[0].title }}</md-subheader>
+    <md-list-item ng-repeat="item in TodoLists[0].todos">
+        <p ng-class="{ 'done': item.done }">{{ item.title }}</p>
+        <md-checkbox class="md-secondary" ng-model="item.done"></md-checkbox>
+    </md-list-item>
+</md-list>
+
+<md-subheader class="md-default">Todas as Tarefas (1 de 2 concluídas)</md-subheader>
 <md-list ng-cloak>
     <md-subheader class="md-no-sticky">{{ TodoLists[0].title }}</md-subheader>
     <md-list-item ng-repeat="item in TodoLists[0].todos">

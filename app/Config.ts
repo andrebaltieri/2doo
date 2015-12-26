@@ -5,6 +5,7 @@ module doo {
 
     function config($mdThemingProvider: ng.material.IThemingProvider)
     {
+        // http://www.getmdl.io/customize/index.html
         $mdThemingProvider.theme('default').primaryPalette('pink').accentPalette('orange');
     }
 

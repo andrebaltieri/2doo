@@ -9,6 +9,7 @@ var doo;
 (function (doo) {
     'use strict';
     function config($mdThemingProvider) {
+        // http://www.getmdl.io/customize/index.html
         $mdThemingProvider.theme('default').primaryPalette('pink').accentPalette('orange');
     }
     config.$inject = ['$mdThemingProvider'];

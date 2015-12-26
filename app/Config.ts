@@ -3,21 +3,12 @@
 module doo {
     'use strict';
 
-    function config(
-        $routeProvider: ng.route.IRouteProvider,
-        $mdThemingProvider: ng.material.IThemingProvider)
+    function config($mdThemingProvider: ng.material.IThemingProvider)
     {
-        $routeProvider
-            .when("/", {
-                templateUrl: "pages/todo-list.html",
-                controller: "todoListCtrl",
-                controllerAs: "vm"
-            });
-        
         $mdThemingProvider.theme('default').primaryPalette('pink').accentPalette('orange');
     }
 
-    config.$inject = ['$routeProvider', '$mdThemingProvider'];
+    config.$inject = ['$mdThemingProvider'];
 
     angular.module('doo').config(config);
 }

@@ -3,12 +3,21 @@
 module doo {
     'use strict';
 
-    function config($routeProvider: ng.route.IRouteProvider)
-    {
+    function config($routeProvider: ng.route.IRouteProvider) {
         $routeProvider
             .when("/", {
-                templateUrl: "pages/todo-list.html",
-                controller: "todoListCtrl",
+                templateUrl: "pages/home.html",
+                controller: "homeCtrl",
+                controllerAs: "vm"
+            })
+            .when("/todos/:id", {
+                templateUrl: "pages/todo-items.html",
+                controller: "todoCtrl",
+                controllerAs: "vm"
+            })
+            .otherwise({
+                templateUrl: "pages/404.html",
+                controller: "homeCtrl",
                 controllerAs: "vm"
             });
     }

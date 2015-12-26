@@ -5,7 +5,7 @@
                 <h2>Adicionar Lista</h2>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="vm.cancelAddList()">
-                    <md-icon md-svg-src="img/icons/close.svg" aria-label="Close dialog"></md-icon>
+                    <md-icon md-svg-src="assets/img/icons/close.svg" aria-label="Close dialog"></md-icon>
                 </md-button>
             </div>
         </md-toolbar>
@@ -17,7 +17,7 @@
                 <br><br>
                 <md-input-container class="md-block" flex-gt-sm>
                     <label>Nome da Lista</label>
-                    <input ng-model="vm.listName">
+                    <input ng-model="vm.listName" maxlength="20">
                 </md-input-container>
             </div>
         </md-dialog-content>

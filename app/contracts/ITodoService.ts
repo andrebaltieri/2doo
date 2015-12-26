@@ -2,7 +2,7 @@
 
 module doo {
     export interface ITodoService {
-        getLists(): TodoList[];
-        getTodos(list: string): ng.IPromise<{}>;
+        getTodos(id: number): TodoItem[];
+        addTodoList(title: string): void;
     }
 }

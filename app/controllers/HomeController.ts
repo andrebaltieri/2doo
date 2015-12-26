@@ -1,12 +1,11 @@
 /// <reference path="../_all.ts" />
 module doo {
-    export class TodoListController {
-
+    export class HomeController {
         constructor() {
             
         };
     }
 
     angular.module('doo')
-        .controller('todoListCtrl', TodoListController);
+        .controller('homeCtrl', HomeController);
 }

@@ -1,22 +1,33 @@
 /// <reference path="../_all.ts" />
 
 module doo {
-    export class TodoService implements ITodoService  {
-        static $inject = ['$http'];
+    export class TodoService implements ITodoService {
+        static $inject = ['$rootScope'];
+            
+        private $rootScope: IRootScope;
 
-        constructor(private $http: ng.IHttpService) {
-
+        constructor(private rootScope: IRootScope) {
+            this.$rootScope = rootScope;
         };
 
-        getTodos(list: string): ng.IPromise<{}> {
-            return angular.fromJson(localStorage.getItem('2doo.todos'));  
+        getTodos(id): TodoItem[] {
+            var data: TodoList[] = angular.fromJson(localStorage.getItem('2doo.lists'));
+            data.forEach(element => {
+                if (element.id == id) {
+                    return element.todos;
+                }
+            });
+            
+            return [];
         };
-        
-        getLists(): TodoList[] {
-            return angular.fromJson(localStorage.getItem('2doo.lists'));
-        };
+
+        addTodoList(title): void {
+            var id = this.$rootScope.TodoLists.length + 1;            
+            this.$rootScope.TodoLists.push(new TodoList(id, title, []));
+            localStorage.setItem('2doo.lists', angular.toJson(this.$rootScope.TodoLists));
+        }
     }
-    
+
     angular.module('doo')
         .service('todoService', TodoService);
 }

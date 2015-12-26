@@ -21,8 +21,18 @@ var doo;
     function config($routeProvider) {
         $routeProvider
             .when("/", {
-            templateUrl: "pages/todo-list.html",
-            controller: "todoListCtrl",
+            templateUrl: "pages/home.html",
+            controller: "homeCtrl",
+            controllerAs: "vm"
+        })
+            .when("/todos/:id", {
+            templateUrl: "pages/todo-items.html",
+            controller: "todoCtrl",
+            controllerAs: "vm"
+        })
+            .otherwise({
+            templateUrl: "pages/404.html",
+            controller: "homeCtrl",
             controllerAs: "vm"
         });
     }
@@ -33,19 +43,9 @@ var doo;
 var doo;
 (function (doo) {
     'use strict';
-    angular.module('doo').constant('SETTINGS', {
-        "LISTS_PATH": "2doo.lists",
-        "TODOS_PATH": "2doo.todos"
-    });
-})(doo || (doo = {}));
-/// <reference path="_all.ts" />
-var doo;
-(function (doo) {
-    'use strict';
     function start($rootScope) {
         var lists = localStorage.getItem('2doo.lists');
         var todos = localStorage.getItem('2doo.todos');
-        console.log(lists);
         if (lists == null || lists == undefined || lists == '') {
             $rootScope.TodoLists = [];
         }
@@ -59,25 +59,24 @@ var doo;
 /// <reference path="../_all.ts" />
 var doo;
 (function (doo) {
-    var TodoListController = (function () {
-        function TodoListController() {
+    var HomeController = (function () {
+        function HomeController() {
         }
         ;
-        return TodoListController;
+        return HomeController;
     })();
-    doo.TodoListController = TodoListController;
+    doo.HomeController = HomeController;
     angular.module('doo')
-        .controller('todoListCtrl', TodoListController);
+        .controller('homeCtrl', HomeController);
 })(doo || (doo = {}));
 /// <reference path="../_all.ts" />
 var doo;
 (function (doo) {
     var SideBarController = (function () {
-        function SideBarController(rootScope, $mdSidenav, $mdDialog, service) {
-            this.rootScope = rootScope;
+        function SideBarController($mdSidenav, $mdDialog, service) {
             this.$mdSidenav = $mdSidenav;
             this.$mdDialog = $mdDialog;
-            this.$rootScope = rootScope;
+            this.todoService = service;
         }
         ;
         SideBarController.prototype.close = function () {
@@ -99,13 +98,10 @@ var doo;
             this.$mdDialog.cancel();
         };
         SideBarController.prototype.addList = function () {
-            var id = this.$rootScope.TodoLists.length + 1;
-            var title = this.listName;
-            this.$rootScope.TodoLists.push(new doo.TodoList(id, title));
-            localStorage.setItem('2doo.lists', angular.toJson(this.$rootScope.TodoLists));
+            this.todoService.addTodoList(this.listName);
             this.$mdDialog.cancel();
         };
-        SideBarController.$inject = ['$rootScope', '$mdSidenav', '$mdDialog', 'todoService'];
+        SideBarController.$inject = ['$mdSidenav', '$mdDialog', 'todoService'];
         return SideBarController;
     })();
     doo.SideBarController = SideBarController;
@@ -115,34 +111,72 @@ var doo;
 /// <reference path="../_all.ts" />
 var doo;
 (function (doo) {
+    var TodoController = (function () {
+        function TodoController(service) {
+            this.todoService = service;
+        }
+        ;
+        TodoController.$inject = ['todoService'];
+        return TodoController;
+    })();
+    doo.TodoController = TodoController;
+    angular.module('doo')
+        .controller('todoCtrl', TodoController);
+})(doo || (doo = {}));
+/// <reference path="../_all.ts" />
+var doo;
+(function (doo) {
     var TodoList = (function () {
-        function TodoList(id, title) {
+        function TodoList(id, title, todos) {
             this.id = id;
             this.title = title;
+            this.todos = todos;
         }
         return TodoList;
     })();
     doo.TodoList = TodoList;
 })(doo || (doo = {}));
-/// <reference path="../../_all.ts" />
+/// <reference path="../_all.ts" />
+var doo;
+(function (doo) {
+    'use strict';
+    var TodoItem = (function () {
+        function TodoItem(id, title, done) {
+            this.id = id;
+            this.title = title;
+            this.done = done;
+        }
+        return TodoItem;
+    })();
+    doo.TodoItem = TodoItem;
+})(doo || (doo = {}));
+/// <reference path="../_all.ts" />
 /// <reference path="../_all.ts" />
 /// <reference path="../_all.ts" />
 var doo;
 (function (doo) {
     var TodoService = (function () {
-        function TodoService($http) {
-            this.$http = $http;
+        function TodoService(rootScope) {
+            this.rootScope = rootScope;
+            this.$rootScope = rootScope;
         }
         ;
-        TodoService.prototype.getTodos = function (list) {
-            return angular.fromJson(localStorage.getItem('2doo.todos'));
+        TodoService.prototype.getTodos = function (id) {
+            var data = angular.fromJson(localStorage.getItem('2doo.lists'));
+            data.forEach(function (element) {
+                if (element.id == id) {
+                    return element.todos;
+                }
+            });
+            return [];
         };
         ;
-        TodoService.prototype.getLists = function () {
-            return angular.fromJson(localStorage.getItem('2doo.lists'));
+        TodoService.prototype.addTodoList = function (title) {
+            var id = this.$rootScope.TodoLists.length + 1;
+            this.$rootScope.TodoLists.push(new doo.TodoList(id, title, []));
+            localStorage.setItem('2doo.lists', angular.toJson(this.$rootScope.TodoLists));
         };
-        ;
-        TodoService.$inject = ['$http'];
+        TodoService.$inject = ['$rootScope'];
         return TodoService;
     })();
     doo.TodoService = TodoService;
@@ -155,12 +189,13 @@ var doo;
 /// <reference path="Modules.ts" />
 /// <reference path="Config.ts" />
 /// <reference path="Routes.ts" />
-/// <reference path="Settings.ts" />
 /// <reference path="Startup.ts" />
-/// <reference path="controllers/TodoListController.ts" />
+/// <reference path="controllers/HomeController.ts" />
 /// <reference path="controllers/SideBarController.ts" />
+/// <reference path="controllers/TodoController.ts" />
 /// <reference path="models/TodoList.ts" />
-/// <reference path="models/contracts/IRootScope.ts" />
+/// <reference path="models/TodoItem.ts" />
+/// <reference path="contracts/IRootScope.ts" />
 /// <reference path="contracts/ITodoService.ts" />
 /// <reference path="services/TodoService.ts" /> 
 //# sourceMappingURL=scripts-1.0.0.js.map

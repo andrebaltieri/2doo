@@ -21,7 +21,7 @@
 	"showOutput": "silent",
 
 	// args is the HelloWorld program to compile.
-	"args": ["--sourcemap", "--out", "wwwroot/assets/scripts-1.0.0.js", "app/_all.ts"],
+	"args": ["--sourcemap", "--out", "wwwroot/assets/js/scripts-1.0.0.js", "app/_all.ts"],
 
 	// use the standard tsc problem matcher to find compile problems
 	// in the output.

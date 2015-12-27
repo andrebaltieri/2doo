@@ -12,4 +12,5 @@
 /// <reference path="models/TodoItem.ts" />
 /// <reference path="contracts/IRootScope.ts" />
 /// <reference path="contracts/ITodoService.ts" />
+/// <reference path="contracts/IRouteParams.ts" />
 /// <reference path="services/TodoService.ts" />

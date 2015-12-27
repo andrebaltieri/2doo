@@ -10,20 +10,13 @@ module doo {
             this.$rootScope = rootScope;
         };
 
-        getTodos(id): TodoItem[] {
+        getTodos(index): TodoItem[] {
             var data: TodoList[] = angular.fromJson(localStorage.getItem('2doo.lists'));
-            data.forEach(element => {
-                if (element.id == id) {
-                    return element.todos;
-                }
-            });
-            
-            return [];
+            return data[index].todos;
         };
 
-        addTodoList(title): void {
-            var id = this.$rootScope.TodoLists.length + 1;            
-            this.$rootScope.TodoLists.push(new TodoList(id, title, []));
+        addTodoList(title): void {    
+            this.$rootScope.TodoLists.push(new TodoList(title, []));
             localStorage.setItem('2doo.lists', angular.toJson(this.$rootScope.TodoLists));
         }
     }

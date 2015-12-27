@@ -1,12 +1,13 @@
 /// <reference path="../_all.ts" />
 module doo {
     export class TodoController {
-        static $inject = ['todoService'];
+        static $inject = ['$routeParams'];       
         
-        private todoService: ITodoService;
+        private index: number = 0;
         
-        constructor(service: ITodoService) {
-            this.todoService = service;
+        constructor($routeParams: IRouteParams) {
+            this.index = $routeParams.index;
+            console.log(this.index);
         };
     }
 

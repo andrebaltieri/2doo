@@ -26,7 +26,7 @@ var doo;
             controller: "homeCtrl",
             controllerAs: "vm"
         })
-            .when("/todos/:id", {
+            .when("/todos/:index", {
             templateUrl: "pages/todo-items.html",
             controller: "todoCtrl",
             controllerAs: "vm"
@@ -113,11 +113,13 @@ var doo;
 var doo;
 (function (doo) {
     var TodoController = (function () {
-        function TodoController(service) {
-            this.todoService = service;
+        function TodoController($routeParams) {
+            this.index = 0;
+            this.index = $routeParams.index;
+            console.log(this.index);
         }
         ;
-        TodoController.$inject = ['todoService'];
+        TodoController.$inject = ['$routeParams'];
         return TodoController;
     })();
     doo.TodoController = TodoController;
@@ -128,8 +130,7 @@ var doo;
 var doo;
 (function (doo) {
     var TodoList = (function () {
-        function TodoList(id, title, todos) {
-            this.id = id;
+        function TodoList(title, todos) {
             this.title = title;
             this.todos = todos;
         }
@@ -154,6 +155,7 @@ var doo;
 /// <reference path="../_all.ts" />
 /// <reference path="../_all.ts" />
 /// <reference path="../_all.ts" />
+/// <reference path="../_all.ts" />
 var doo;
 (function (doo) {
     var TodoService = (function () {
@@ -162,19 +164,13 @@ var doo;
             this.$rootScope = rootScope;
         }
         ;
-        TodoService.prototype.getTodos = function (id) {
+        TodoService.prototype.getTodos = function (index) {
             var data = angular.fromJson(localStorage.getItem('2doo.lists'));
-            data.forEach(function (element) {
-                if (element.id == id) {
-                    return element.todos;
-                }
-            });
-            return [];
+            return data[index].todos;
         };
         ;
         TodoService.prototype.addTodoList = function (title) {
-            var id = this.$rootScope.TodoLists.length + 1;
-            this.$rootScope.TodoLists.push(new doo.TodoList(id, title, []));
+            this.$rootScope.TodoLists.push(new doo.TodoList(title, []));
             localStorage.setItem('2doo.lists', angular.toJson(this.$rootScope.TodoLists));
         };
         TodoService.$inject = ['$rootScope'];
@@ -198,5 +194,6 @@ var doo;
 /// <reference path="models/TodoItem.ts" />
 /// <reference path="contracts/IRootScope.ts" />
 /// <reference path="contracts/ITodoService.ts" />
+/// <reference path="contracts/IRouteParams.ts" />
 /// <reference path="services/TodoService.ts" /> 
 //# sourceMappingURL=scripts-1.0.0.js.map

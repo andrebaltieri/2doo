@@ -2,6 +2,6 @@
 
 module doo {
     export class TodoList {
-        constructor(public id: number, public title: string, public todos: TodoItem[]) { }
+        constructor(public title: string, public todos: TodoItem[]) { }
     }
 }

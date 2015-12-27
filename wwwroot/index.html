@@ -20,7 +20,7 @@
             </md-toolbar>
             <md-content>
                 <md-subheader class="md-no-sticky">Minhas Listas</md-subheader>
-                <md-list-item href="#/todos/{{ list.id }}" ng-repeat="list in TodoLists">
+                <md-list-item href="#/todos/{{ TodoLists.indexOf(list) }}" ng-repeat="list in TodoLists | orderBy: 'title'">
                     <p>{{ list.title }}</p>
                 </md-list-item>
             </md-content>

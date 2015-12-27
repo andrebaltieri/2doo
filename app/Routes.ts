@@ -10,7 +10,7 @@ module doo {
                 controller: "homeCtrl",
                 controllerAs: "vm"
             })
-            .when("/todos/:id", {
+            .when("/todos/:index", {
                 templateUrl: "pages/todo-items.html",
                 controller: "todoCtrl",
                 controllerAs: "vm"

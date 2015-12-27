@@ -10,6 +10,7 @@ var doo;
     'use strict';
     function config($mdThemingProvider) {
         // http://www.getmdl.io/customize/index.html
+        // https://materialdesignicons.com/
         $mdThemingProvider.theme('default').primaryPalette('pink').accentPalette('orange');
     }
     config.$inject = ['$mdThemingProvider'];
@@ -45,8 +46,7 @@ var doo;
 (function (doo) {
     'use strict';
     function start($rootScope) {
-        var lists = localStorage.getItem('2doo.lists');
-        var todos = localStorage.getItem('2doo.todos');
+        var lists = localStorage.getItem('2doos');
         if (lists == null || lists == undefined || lists == '') {
             $rootScope.TodoLists = [];
         }
@@ -74,9 +74,11 @@ var doo;
 var doo;
 (function (doo) {
     var SideBarController = (function () {
-        function SideBarController($mdSidenav, $mdDialog, service) {
+        function SideBarController($mdSidenav, $mdDialog, $mdBottomSheet, $location, service) {
             this.$mdSidenav = $mdSidenav;
             this.$mdDialog = $mdDialog;
+            this.$mdBottomSheet = $mdBottomSheet;
+            this.$location = $location;
             this.todoService = service;
         }
         ;
@@ -102,7 +104,17 @@ var doo;
             this.todoService.addTodoList(this.listName);
             this.$mdDialog.cancel();
         };
-        SideBarController.$inject = ['$mdSidenav', '$mdDialog', 'todoService'];
+        SideBarController.prototype.showBottomMenu = function () {
+            this.$mdBottomSheet.show({
+                templateUrl: 'pages/bottom-menu.html'
+            });
+        };
+        SideBarController.prototype.clearData = function () {
+            this.todoService.clearData();
+            this.$location.path('/');
+            this.$mdBottomSheet.cancel();
+        };
+        SideBarController.$inject = ['$mdSidenav', '$mdDialog', '$mdBottomSheet', '$location', 'todoService'];
         return SideBarController;
     })();
     doo.SideBarController = SideBarController;
@@ -113,13 +125,32 @@ var doo;
 var doo;
 (function (doo) {
     var TodoController = (function () {
-        function TodoController($routeParams) {
+        function TodoController($routeParams, $mdDialog, service) {
+            this.$routeParams = $routeParams;
+            this.$mdDialog = $mdDialog;
+            this.order = 'title';
             this.index = 0;
+            this.todoService = service;
             this.index = $routeParams.index;
-            console.log(this.index);
         }
         ;
-        TodoController.$inject = ['$routeParams'];
+        TodoController.prototype.showAddDialog = function () {
+            this.$mdDialog.show({
+                templateUrl: 'pages/add-todo.html',
+                clickOutsideToClose: true
+            });
+        };
+        TodoController.prototype.add = function () {
+            this.todoService.addTodoItem(this.index, this.todo);
+            this.$mdDialog.cancel();
+        };
+        TodoController.prototype.save = function () {
+            this.todoService.save();
+        };
+        TodoController.prototype.changeOrder = function (order) {
+            this.order = order;
+        };
+        TodoController.$inject = ['$routeParams', '$mdDialog', 'todoService'];
         return TodoController;
     })();
     doo.TodoController = TodoController;
@@ -143,8 +174,7 @@ var doo;
 (function (doo) {
     'use strict';
     var TodoItem = (function () {
-        function TodoItem(id, title, done) {
-            this.id = id;
+        function TodoItem(title, done) {
             this.title = title;
             this.done = done;
         }
@@ -164,14 +194,20 @@ var doo;
             this.$rootScope = rootScope;
         }
         ;
-        TodoService.prototype.getTodos = function (index) {
-            var data = angular.fromJson(localStorage.getItem('2doo.lists'));
-            return data[index].todos;
-        };
-        ;
         TodoService.prototype.addTodoList = function (title) {
             this.$rootScope.TodoLists.push(new doo.TodoList(title, []));
-            localStorage.setItem('2doo.lists', angular.toJson(this.$rootScope.TodoLists));
+            localStorage.setItem('2doos', angular.toJson(this.$rootScope.TodoLists));
+        };
+        TodoService.prototype.addTodoItem = function (index, title) {
+            this.$rootScope.TodoLists[index].todos.push(new doo.TodoItem(title, false));
+            localStorage.setItem('2doos', angular.toJson(this.$rootScope.TodoLists));
+        };
+        TodoService.prototype.save = function () {
+            localStorage.setItem('2doos', angular.toJson(this.$rootScope.TodoLists));
+        };
+        TodoService.prototype.clearData = function () {
+            localStorage.removeItem('2doos');
+            this.$rootScope.TodoLists = [];
         };
         TodoService.$inject = ['$rootScope'];
         return TodoService;

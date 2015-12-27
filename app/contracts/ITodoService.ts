@@ -2,7 +2,9 @@
 
 module doo {
     export interface ITodoService {
-        getTodos(id: number): TodoItem[];
         addTodoList(title: string): void;
+        addTodoItem(index: number, title: string): void;
+        save(): void;
+        clearData(): void;
     }
 }

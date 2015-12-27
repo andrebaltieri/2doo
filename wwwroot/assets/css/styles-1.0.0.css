@@ -5,3 +5,7 @@
 .done{
     text-decoration: line-through;
 }
+
+.img-responsive{
+    width: 100%;
+}

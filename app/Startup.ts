@@ -4,8 +4,7 @@ module doo {
     'use strict';
 
     function start($rootScope: IRootScope) {
-        var lists: string = localStorage.getItem('2doo.lists');
-        var todos: string = localStorage.getItem('2doo.todos');        
+        var lists: string = localStorage.getItem('2doos');       
         
         if (lists == null || lists == undefined || lists == '') {
             $rootScope.TodoLists = [];

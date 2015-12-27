@@ -3,21 +3,30 @@
 module doo {
     export class TodoService implements ITodoService {
         static $inject = ['$rootScope'];
-            
+
         private $rootScope: IRootScope;
 
         constructor(private rootScope: IRootScope) {
             this.$rootScope = rootScope;
         };
 
-        getTodos(index): TodoItem[] {
-            var data: TodoList[] = angular.fromJson(localStorage.getItem('2doo.lists'));
-            return data[index].todos;
-        };
-
-        addTodoList(title): void {    
+        addTodoList(title): void {
             this.$rootScope.TodoLists.push(new TodoList(title, []));
-            localStorage.setItem('2doo.lists', angular.toJson(this.$rootScope.TodoLists));
+            localStorage.setItem('2doos', angular.toJson(this.$rootScope.TodoLists));
+        }
+
+        addTodoItem(index, title): void {
+            this.$rootScope.TodoLists[index].todos.push(new TodoItem(title, false));
+            localStorage.setItem('2doos', angular.toJson(this.$rootScope.TodoLists));
+        }
+
+        save(): void {
+            localStorage.setItem('2doos', angular.toJson(this.$rootScope.TodoLists));
+        }
+
+        clearData(): void {
+            localStorage.removeItem('2doos');
+            this.$rootScope.TodoLists = [];
         }
     }
 

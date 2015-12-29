@@ -1,0 +1,35 @@
+CACHE MANIFEST
+# cache version 1.0.0.8
+
+/assets/css/angular-material.css
+/assets/css/styles-1.0.0.css
+
+assets/img/icons/alphabetical.svg
+assets/img/icons/check.svg
+assets/img/icons/clear-list.svg
+assets/img/icons/close.svg
+assets/img/icons/menu.svg
+assets/img/icons/more.svg
+assets/img/2doo.jpg
+assets/img/2doo.png
+assets/img/2doo-no-bg.png
+assets/img/favicon.ico
+assets/img/touch-icon.png
+assets/img/splash-screen.png
+
+assets/js/angular.js
+assets/js/angular-animate.js
+assets/js/angular-aria.js
+assets/js/angular-material.js
+assets/js/angular-route.js
+assets/js/scripts-1.0.0.js
+assets/js/scripts-1.0.0.js.map
+
+pages/404.html
+pages/add-list.html
+pages/add-todo.html
+pages/bottom-menu.html
+pages/home.html
+pages/todo-items.html
+
+index.html

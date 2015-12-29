@@ -1,4 +1,4 @@
-<html ng-app="doo">
+<html ng-app="doo" manifest="/app.appcache">
 
 <head>
     <meta charset="utf-8">
@@ -14,10 +14,12 @@
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" sizes="196x196" href="assets/img/touch-icon.png">
 
+    <!-- https://gist.github.com/tfausak/2222823 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon" href="assets/img/touch-icon.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">    
     <meta name="apple-mobile-web-app-title" content="2doo Task Manager">
+    <link rel="apple-touch-startup-image" href="assets/img/splash-screen.png">
+    <link rel="apple-touch-icon" href="assets/img/touch-icon.png">    
 
     <link rel="stylesheet" href="assets/css/angular-material.css">
     <link rel="stylesheet" href="assets/css/styles-1.0.0.css">
@@ -31,7 +33,7 @@
             </md-toolbar>
             <md-content>
                 <md-subheader class="md-no-sticky">Minhas Listas</md-subheader>
-                <md-list-item href="#/todos/{{ TodoLists.indexOf(list) }}" ng-repeat="list in TodoLists | orderBy: 'title'">
+                <md-list-item href="#/todos/{{ TodoLists.indexOf(list) }}" ng-click="vm.close()" ng-repeat="list in TodoLists | orderBy: 'title'">
                     <p>{{ list.title }}</p>
                 </md-list-item>
             </md-content>

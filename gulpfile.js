@@ -11,14 +11,14 @@ var paths = {
             'node_modules/angular-material/angular-material.css',
             'custom_components/css/styles.css'
         ],
-        dest: 'www/assets/css/',
+        dest: 'wwwroot/assets/css/',
         file: 'styles-1.0.0.min.css'
     },
     typescript: {
         src: [
             'app/_all.ts'
         ],
-        dest: 'www/assets/js/',
+        dest: 'wwwroot/assets/js/',
         file: 'app-1.0.0.min.js'
     },
     scripts: {
@@ -31,7 +31,7 @@ var paths = {
             'node_modules/angular-route/angular-route.js',
             'node_modules/angular-material/angular-material.js'
         ],
-        dest: 'www/assets/js/',
+        dest: 'wwwroot/assets/js/',
         file: 'scripts-1.0.0.min.js'
     }
 };

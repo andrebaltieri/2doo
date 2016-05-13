@@ -2,7 +2,7 @@ CACHE MANIFEST
 # cache version 1.0.0.8
 
 /assets/css/angular-material.css
-/assets/css/styles-1.0.0.css
+/assets/css/styles-1.0.0.min.css
 
 assets/img/icons/alphabetical.svg
 assets/img/icons/check.svg
@@ -17,13 +17,8 @@ assets/img/favicon.ico
 assets/img/touch-icon.png
 assets/img/splash-screen.png
 
-assets/js/angular.js
-assets/js/angular-animate.js
-assets/js/angular-aria.js
-assets/js/angular-material.js
-assets/js/angular-route.js
-assets/js/scripts-1.0.0.js
-assets/js/scripts-1.0.0.js.map
+assets/js/scripts-1.0.0.min.js
+assets/js/app-1.0.0.min.js
 
 pages/404.html
 pages/add-list.html

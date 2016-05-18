@@ -2,7 +2,7 @@
 module doo {
     export class HomeController {
         constructor() {
-            
+            document.getElementById('splash-screen').remove();
         };
     }
 

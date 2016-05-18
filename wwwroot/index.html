@@ -24,7 +24,14 @@
     <link rel="stylesheet" href="assets/css/styles-1.0.0.min.css">
 </head>
 
-<body layout="column">
+<div class="splash" id="splash-screen">
+    <p class="text-center">
+        <br>
+        <img src="assets/img/2doo-no-bg.png" class="img-responsive" alt="2doo">
+    </p>
+</div>  
+
+<body layout="column" ng-cloak>
     <section layout="row" flex ng-controller="sideBarCtrl as vm">
         <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
             <md-toolbar>
@@ -59,7 +66,7 @@
     </section>
     
     <script src="assets/js/scripts-1.0.0.min.js"></script>
-    <script src="assets/js/app-1.0.0.min.js"></script>
+    <script src="assets/js/app-1.0.0.min.js"></script>    
 </body>
 
 </html>
